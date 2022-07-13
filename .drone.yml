@@ -1,0 +1,59 @@
+---
+kind: pipeline
+name: default
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: test
+  image: golang:1.18
+  commands:
+  - go test ./... -cover -v
+
+- name: lint
+  image: golangci/golangci-lint:v1.46.2
+  commands:
+  - golangci-lint run
+
+- name: build
+  image: golang:1.18
+  commands:
+  - CGO_ENABLED=0 GOOS=linux go build -o main
+
+- name: publish
+  image: plugins/docker
+  settings:
+    auto_tag: true
+    password:
+      from_secret: docker_password
+    repo: ${DRONE_REPO,,}
+    username:
+      from_secret: docker_username
+
+trigger:
+  branch:
+  - master
+
+---
+kind: pipeline
+name: second_pipeline
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: test
+  image: golang:1.18
+  commands:
+  - go test ./... -cover -v
+
+trigger:
+  branch:
+  - master
+
+...

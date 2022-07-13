@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2022 John Jones
 
 */
 package cmd
@@ -10,21 +10,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "octodrone",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Short: "This is a simple CLI tool to convert .drone.yml files to github action workflows.",
+	Long: `This does not guarantee any pipeline will work.
+	
+	Basic pipelines should convert without many issues.
+	It is always highly recommended to check the generated
+	workflows to ensure they are doing what is expected`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -47,5 +41,3 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-
